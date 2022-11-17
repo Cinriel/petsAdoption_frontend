@@ -1,17 +1,17 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" 
+    v-loading.fullscreen.lock ='isLoading'
+    element-loading-text="拼命加载中"  >
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import {mapState} from 'vuex'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  computed:{
+    ...mapState('globalOptions',['isLoading']),
   }
 }
 </script>
@@ -23,6 +23,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
 }
+
+body {
+  margin: 0;
+}
+
 </style>
