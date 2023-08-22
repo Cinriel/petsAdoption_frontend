@@ -109,11 +109,11 @@ export default {
           let res; 
           if(!node.root){
             if(!node.data.leaf){
-              res = await axios.get("http://localhost:8001/api/pets/getCategory?kind="+node.data.value);
+              res = await axios.get("http://43.143.254.110:8001/api/pets/getCategory?kind="+node.data.value);
               leaf = true
             }
           }else{
-            res = await axios.get("http://localhost:8001/api/pets/getKinds");
+            res = await axios.get("http://43.143.254.110:8001/api/pets/getKinds");
             leaf = false
           }
           let nodes = new Array();
@@ -173,7 +173,7 @@ export default {
       }
     },
     getAdList(){
-      axios.get("http://localhost:8001/api/ad/").then(res=>{
+      axios.get("http://43.143.254.110:8001/api/ad/").then(res=>{
         this.ad_list = res.data.data
       })
     },
@@ -186,7 +186,7 @@ export default {
     })
 
     this.getAdList()
-    axios.get("http://localhost:8001/api/search").then(res=>{
+    axios.get("http://43.143.254.110:8001/api/search").then(res=>{
       this.recommendList = res.data.data.dataList;
       console.log(res.data);
     })
@@ -297,8 +297,11 @@ export default {
   .recommend{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
-
+  .column{
+    margin: 10px;
+  }
   .choice-item-list-container :deep().el-cascader-panel{
     background-color: #ffffff;
     height: 300px;

@@ -35,6 +35,26 @@
         
       </el-form-item>
 
+      <el-form-item label="领养费" prop="money">
+        <el-input
+          style="width:200px"
+          placeholder="请输入领养费"
+          v-model="detailPetsForm.money">
+          <i slot="prefix" class="iconfont icon-moneybag"></i>
+          <template slot="append">元</template>
+        </el-input>
+      </el-form-item>
+
+      <el-form-item label="运费" prop="freight" >
+        <el-input
+          style="width:200px"
+          placeholder="请输入运费"
+          v-model="detailPetsForm.freight">
+          <i slot="prefix" class="iconfont icon-Express_transportation"></i>
+          <template slot="append">元</template>
+        </el-input>
+      </el-form-item>
+
       
       <!-- 图片 -->
       <el-form-item label="图片信息" prop="images">
@@ -82,7 +102,9 @@ export default {
         images:[],
         detailInfo:{
           饲料:[],
-        }
+        },
+        money:'',
+        freight:''
       },
       rules:{
         images:[
@@ -91,6 +113,14 @@ export default {
         catDesc:[
           { required: true, message: '请输入宠物介绍', trigger: 'blur' },
           { min: 10, message: '长度在 10 个字符以上', trigger: 'blur' }
+        ],
+        money:[
+          { required: true, message: '请输入领养费', trigger: 'blur' },
+          { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确格式,可保留两位小数' }
+        ],
+        freight:[
+          { required: true, message: '请输入运费', trigger: 'blur' },
+          { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确格式,可保留两位小数' }
         ]
       },
       petsDetailTemplate:[
@@ -115,7 +145,7 @@ export default {
           // 跳转路由
           this.$router.push({name:'allInfo'})
           // active改变
-          this.$store.state.active=2
+          this.$store.state.PostPetsOptions.active=2
         } else {
           this.$message.error("请检查信息完整");
           return false;
@@ -175,10 +205,15 @@ export default {
 </script>
 
 <style scoped>
+@import url('../../../assets/post_pet_icon/iconfont.css');
 .el-form{
   text-align: left;
 }
 #imgUpload>>>input[type="file"]{
   display: none;
+}
+.iconfont{
+  font-size: 25px;
+  line-height: 40px;
 }
 </style>

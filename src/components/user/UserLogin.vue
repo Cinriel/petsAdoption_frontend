@@ -52,7 +52,6 @@
 
 <script>
 import axios from 'axios'
-import {Base64} from 'js-base64'  // 检查 todo
 import {mapActions} from 'vuex'
 export default {
   name:"UserLogin",
@@ -86,11 +85,11 @@ export default {
       this.loadingStatus(true)
       let data={
         'username':this.userData.username,
-        'password': Base64.encode(this.userData.password),
+        'password': window.btoa(this.userData.password),
         'uuid': this.uuid,
         'code': this.userData.captcha
       }
-      axios.post('http://localhost:8001/api/oauth/login', data).then(res=>{
+      axios.post('http://192.168.124.71:8001/api/oauth/login', data).then(res=>{
         this.loadingStatus(false)
         if(res.data.flag){
           this.$message.success(res.data.message)
@@ -118,7 +117,7 @@ export default {
       return uuid;
     },
     getKaptcha(){
-      this.captchaSrc = 'http://localhost:8001/api/oauth/kaptcha?uuid='+this.uuid+"&date="+new Date();
+      this.captchaSrc = 'http://192.168.124.71:8001/api/oauth/kaptcha?uuid='+this.uuid+"&date="+new Date();
     }
   },
   mounted(){

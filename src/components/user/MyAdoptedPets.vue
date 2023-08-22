@@ -1,56 +1,82 @@
 <template>
   <div>
-    <el-collapse v-model="activeNames" @change="handleChange">
-      <el-collapse-item name="1">
-        <template slot="title">
-          <el-badge :value="toPayList.length" class="item">
-            <h3>待支付</h3>
+    <el-container style="height: 95vh; border: 1px solid #eee">
+      <el-header style="text-align: right; font-size: 12px">
+      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu-item index="1">
+          <el-badge :value="toPayList.length" :max="99" class="item">
+            待支付
           </el-badge>
-        </template>
-        <el-empty description="暂时没有内容哦" v-if="!toPayList.length"></el-empty>
-        
-        <el-row v-else>
-          <el-col :span="8" v-for="toPayListItem in toPayList" :key="toPayListItem.id">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="toPayListItem.image" class="image">
-              <div style="padding: 14px;">
-                <span>{{toPayListItem.title}}</span>
-                <div class="bottom clearfix">
-                  <span>{{toPayListItem.payMoney}} 元 &nbsp;</span>
-
-                  <el-button type="text" class="button" @click="pay(toPayListItem.id,toPayListItem.payMoney)">支付</el-button>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-collapse-item>
-
-      <el-collapse-item name="2">
-        <template slot="title">
-          <el-badge :value="travelList.length" class="item">
-            <h3>运送中</h3>
+        </el-menu-item>
+        <el-menu-item index="2">
+          <el-badge :value="toReceiveList.length" :max="99" class="item">
+            待收货
           </el-badge>
+        </el-menu-item>
+        <el-menu-item index="3">
+          <el-badge :value="finishedList.length" :max="99" class="item">
+            待评价
+          </el-badge>
+        </el-menu-item>
+        <el-menu-item index="4">
+          <el-badge :value="200" :max="99" class="item">
+            全部
+          </el-badge>
+        </el-menu-item>
+      </el-menu>
+      </el-header>
 
-        </template>
-        <el-empty description="暂时没有内容哦" v-if="!toPayList.length"></el-empty>
-        
-        <el-row v-else>
-          <el-col :span="8" v-for="travelListItem in travelList" :key="travelListItem.id">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="travelListItem.image" class="image">
-              <div style="padding: 14px;">
-                <div class="bottom clearfix">
-                  <span>下单日期:{{travelListItem.buildDate | formatDate}}</span>
-                  <el-button type="text" class="button" @click="confirmReceipt(travelListItem.id)">确认收货</el-button>
+      <div v-show="activeIndex==1">
+        <el-main>
+          <el-empty description="暂时没有内容哦" v-if="!toPayList.length"></el-empty>
+          <el-row v-else class='pet-card-list'>
+            <el-col :span="8" v-for="toPayListItem in toPayList" :key="toPayListItem.id">
+              <el-card :body-style="{ padding: '0px' }">
+                <img :src="toPayListItem.image" class="image">
+                <div style="padding: 14px;">
+                  <span>{{toPayListItem.title}}</span>
+                  <div class="bottom clearfix">
+                    <span>{{toPayListItem.payMoney}} 元 &nbsp;</span>
+                    <el-button type="text" class="button" @click="pay(toPayListItem.id,toPayListItem.payMoney)">支付</el-button>
+                  </div>
                 </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-collapse-item>
+              </el-card>
+            </el-col>
+          </el-row>
+        </el-main>
+      </div>
 
-    </el-collapse>
+      <div v-show="activeIndex==2">
+        <el-main>
+          <el-empty description="暂时没有内容哦" v-if="!toReceiveList.length"></el-empty>
+          <el-row v-else class='pet-card-list'>
+            <el-col :span="8" v-for="toReceiveListItem in toReceiveList" :key="toReceiveListItem.id">
+              <el-card :body-style="{ padding: '0px' }">
+                <img :src="toReceiveListItem.image" class="image">
+                <div style="padding: 14px;">
+                  <div class="bottom clearfix">
+                    <span>下单日期:{{toReceiveListItem.buildDate | formatDate}}</span>
+                    <el-button type="text" class="button" @click="confirmReceipt(toReceiveListItem.id)">确认收货</el-button>
+                  </div>
+                </div>
+              </el-card>
+            </el-col>
+          </el-row>
+        </el-main>
+      </div>
+
+      <div v-show="activeIndex==3">
+        <el-main>
+        待评价
+        </el-main>
+      </div>
+
+      <div v-show="activeIndex==4">
+        <el-main>
+        全部
+        </el-main>
+      </div>
+    </el-container>
  
     <!-- 支付dialog -->
     <el-dialog
@@ -77,9 +103,9 @@ export default {
   name:"MyAdoptedPets",
   data(){
     return{
-      activeNames: ['1'],
+      activeIndex: '1',  // 默认打开
       toPayList:[],   // 待支付
-      travelList:[],   // 已支付
+      toReceiveList:[],   // 待收货
       finishedList:[], // 待评价
       showPayDialog:false,
       payMoney:'',
@@ -94,7 +120,11 @@ export default {
   },
   methods:{
     ...mapActions('globalOptions',['loadingStatus']),
-
+    // 页面跳转
+    handleSelect(key, keyPath) {
+      this.activeIndex = key
+      console.log(key, keyPath);
+    },
     handleChange(val) {
       console.log(val);
     },
@@ -112,10 +142,10 @@ export default {
         this.loadingStatus(false)
       })
     },
-    getTravelList(){
-      this.$axios.get("/api/order/getTravelList").then(res=>{
+    getToReceiveList(){
+      this.$axios.get("/api/order/getToReceiveList").then(res=>{
         if(res.data.flag){
-          this.travelList = res.data.data
+          this.toReceiveList = res.data.data
         }else{
           this.$message.error("系统出错，请稍后再试")
         }
@@ -169,7 +199,7 @@ export default {
   },
   mounted(){
     this.getToPayList();
-    this.getTravelList();
+    this.getToReceiveList();
   }
 }
 </script>
@@ -178,5 +208,14 @@ export default {
   .image{
     width: 100%;
     height: 400px;
+  }
+  .pet-card-lists{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .pet-card-list>div{
+    margin: 10px;
+    width: 30%;
   }
 </style>

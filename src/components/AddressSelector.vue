@@ -32,10 +32,10 @@ export default {
           if(!node.root){
             // 不为根节点
             let id = node.data.id
-            res = await axios.get("http://localhost:8001/api/region/getSubregion?pid="+id);
+            res = await axios.get("http://43.143.254.110:8001/api/region/getSubregion?pid="+id);
             // 地点集合
           }else{
-            res = await axios.get("http://localhost:8001/api/region/getSubregion?pid=100000");
+            res = await axios.get("http://43.143.254.110:8001/api/region/getSubregion?pid=100000");
           }
           let nodes = new Array();
           let data = res.data.data

@@ -76,4 +76,7 @@ export default {
   .el-aside {
     color: #333;
   }
+  .el-menu-vertical-demo{
+    text-align: left;
+  }
 </style>

@@ -1,27 +1,9 @@
-# foreground
+宠物管理系统前端
 
-## Project setup
-```
-npm install
-```
+| 功能         | 技术                  |
+| ------------ | --------------------- |
+| **框架**     | Vue2                  |
+| **路由**     | Vue Router 3          |
+| **状态管理** | Vuex                  |
+| **样式库**   | ElementUI，bootstrap3 |
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-前台,浏览各种宠物信息，发布宠物信息

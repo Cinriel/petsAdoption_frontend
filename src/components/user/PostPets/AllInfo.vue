@@ -1,13 +1,19 @@
 <template>
   <div>
     <el-form  label-width="100px">
-      <el-form-item 
-        v-for="(value, key) in petsForm"
-        :key="key"
-        :label="key">
-        <el-input :value="value" disabled></el-input>
-      </el-form-item>
-
+      <PreviewPage
+        :title="petsForm.title"
+        :catDesc='petsForm.catDesc'
+        :number='petsForm.number'
+        :height='petsForm.height'
+        :weight="petsForm.weight"
+        :money="petsForm.money"
+        :freight="petsForm.freight"
+        :detailInfo="petsForm.detailInfo"
+        :kinds="petsForm.kinds"
+        :category="petsForm.category"
+        :image='petsForm.images[0]'
+      />
       <el-form-item>
         <el-button style="margin-top: 12px;" @click="prev">上一步</el-button>
         <el-button style="margin-top: 12px;" @click="next('detailPetsForm')">下一步</el-button>
@@ -19,8 +25,10 @@
 
 <script>
 import {mapState,} from 'vuex'
+import PreviewPage from './PreviewPage.vue'
 export default {
   name:'AllInfo',
+  components:{PreviewPage},
   data(){
     return {
       petsForm:[],

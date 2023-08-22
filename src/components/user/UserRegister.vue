@@ -88,7 +88,7 @@ export default {
       }
     };
     var validateUsername = (rule, value, callback)=>{
-      axios.get("http://localhost:8001/api/user/existUsername?username="+value).then(res=>{
+      axios.get("http://43.143.254.110:8001/api/user/existUsername?username="+value).then(res=>{
         if(res.data === 0){
           callback();
         }else{
@@ -158,7 +158,7 @@ export default {
     },
     getKaptcha(){
       console.log("getKaptcha");
-      this.captchaSrc = 'http://localhost:8001/api/oauth/kaptcha?uuid='+this.userRegisterForm.uuid+"&date="+new Date();
+      this.captchaSrc = 'http://43.143.254.110:8001/api/oauth/kaptcha?uuid='+this.userRegisterForm.uuid+"&date="+new Date();
     },
     submitForm(formName) {
       this.loadingStatus(true)

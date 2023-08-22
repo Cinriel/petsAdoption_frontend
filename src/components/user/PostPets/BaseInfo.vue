@@ -17,26 +17,32 @@
     </el-form-item>
 
     <el-form-item label='品种' prop="category">
-      <el-radio-group v-model="ruleForm['category']">
-        <el-radio 
-          :label="category"
+      <el-select v-model="ruleForm['category']" clearable filterable placeholder="请选择">
+        <el-option
           v-for="category in categoryList"
           :key="category"
+          :label="category"
+          :value="category"
         >
-          {{category}}
-        </el-radio>
-      </el-radio-group>
+        </el-option>
+      </el-select>
     </el-form-item>
 
 
-    <el-form-item label="重量" prop="weight" >
-      <el-input v-model="ruleForm['weight']" autocomplete="off" type="number" min="0.00" step="0.01">
+    <el-form-item label="重量" prop="weight">
+      <el-input style="width:200px"  v-model="ruleForm['weight']" autocomplete="off" type="number" min="0.00" step="0.01">
         <template slot="append">kg</template>
       </el-input>
     </el-form-item>
 
+    <el-form-item label="身高" prop="height">
+      <el-input style="width:200px"  v-model="ruleForm['height']" autocomplete="off" type="number" min="0.00" step="0.01">
+        <template slot="append">cm</template>
+      </el-input>
+    </el-form-item>
+
     <el-form-item label="数量" prop="number">
-      <el-input v-model.number="ruleForm['number']" autocomplete="off">
+      <el-input style="width:200px" v-model.number="ruleForm['number']" autocomplete="off">
          <template slot="append">只</template>
       </el-input>
     </el-form-item>
@@ -69,6 +75,7 @@
           weight: '',
           number: '',
           kinds: '',
+          height:'',
           category: '',
           petsId:'', // 由系统填写
         },
@@ -79,6 +86,9 @@
           ],
           weight: [
             {required: true, message: '请输入体重', trigger: 'blur' },
+          ],
+          height: [
+            {required: true, message: '请输入身高', trigger: 'blur' },
           ],
           age: [
             { required: true, message: '请输入年龄', trigger: 'blur' },
@@ -140,7 +150,6 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // 上传vuex
-
             this.$store.dispatch("PostPetsOptions/updateRuleForm",this.ruleForm)
             // active变化
             this.$store.state.PostPetsOptions.active = 1

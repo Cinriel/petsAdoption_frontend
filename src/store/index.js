@@ -22,7 +22,7 @@ const PetsOption={
       }
       let requestParam = context.state.selectedCondtionList
       this.state.globalOptions.isLoading = true
-      axios.get("http://localhost:8001/api/search",{ params:{...requestParam,'current':context.state.current}}).then(res=>{
+      axios.get("http://43.143.254.110:8001/api/search",{ params:{...requestParam,'current':context.state.current}}).then(res=>{
         context.commit("updateData",res.data.data);
         this.state.globalOptions.isLoading = false
       }).catch(err=>{
@@ -37,7 +37,7 @@ const PetsOption={
       delete context.state.selectedCondtionList[value]
       let requestParam = context.state.selectedCondtionList
       this.state.globalOptions.isLoading = true
-      axios.get("http://localhost:8001/api/search",{ params:requestParam}).then(res=>{
+      axios.get("http://43.143.254.110:8001/api/search",{ params:requestParam}).then(res=>{
         context.commit("updateData",res.data.data);
         this.state.globalOptions.isLoading = false
       }).catch(()=>{

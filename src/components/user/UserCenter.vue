@@ -113,7 +113,7 @@
                               :visible.sync="dialogAddAddress"
                               width="40%"
                             >
-                              <el-form :rules="shoppingAddressInfoRules" ref="shoppingAddressInfo" :model="shoppingAddressInfo" label-width="80px">
+                              <el-form :rules="shoppingAddressInfoRules" label-position=top ref="shoppingAddressInfo" :model="shoppingAddressInfo" label-width="80px">
                                 <!-- 收货人名称 -->
                                 <el-form-item label="收货人名称" prop="username">
                                   <el-input type="text" v-model="shoppingAddressInfo.username"></el-input>
@@ -217,7 +217,7 @@
         class="upload-demo"
         drag
         name='imgFile'
-        action="http://localhost:8001/api/file/upload"
+        action="http://43.143.254.110:8001/api/file/uploadImg"
         with-credentials
         :on-success='handleChangeProdileSuccess'
         >

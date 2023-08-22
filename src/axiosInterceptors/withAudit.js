@@ -9,16 +9,15 @@ import router from '../router/router.js'
 // 按照axios官方提示需要引入这两步
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
-axios.defaults.withCredentials = true
 // 创建实例
 let instance = axios.create({
-  baseURL: 'http://localhost:8001',
+  baseURL: 'http://192.168.124.71:8001',
 })
 
 // 全局拦截器
 axios.defaults.withCredentials = true
-axios.defaults.baseURL="http://localhost:8001";
-
+axios.defaults.baseURL="http://192.168.124.71:8001";
+instance.defaults.withCredentials = true
 // 请求拦截器
 instance.interceptors.request.use(
   config => {

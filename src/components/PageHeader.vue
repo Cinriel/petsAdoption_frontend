@@ -8,8 +8,9 @@
     </ul>
     <ul class="fr">
       <li v-if="!username">
-        <router-link :to="{path:'/login'}">你好，请登录</router-link>
-        <a href="http://localhost:8001/api/oauth/toRegister" class="top-item">免费注册</a>
+        <router-link :to="{path:'/login'}">你好，请登录&nbsp;</router-link>
+        <router-link :to="{path:'/register'}">&nbsp;免费注册</router-link>
+        <!-- <a href="http://43.143.254.110:8001/api/oauth/toRegister" class="top-item">免费注册</a> -->
       </li>
       <li v-if="username">
         <router-link :to="{name:'userCenter'}">欢迎:{{username}}</router-link>
@@ -38,7 +39,7 @@ export default {
     let uid = getCookie("uid")
     if(uid){
       console.log(uid);
-      axios.get("http://localhost:8001/api/user/getUsername").then(res=>{
+      axios.get("http://43.143.254.110:8001/api/user/getUsername").then(res=>{
         console.log(res.data);
         this.username = res.data.data
       })
